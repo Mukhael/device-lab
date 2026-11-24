@@ -179,6 +179,26 @@ body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-se
 @media(min-width:700px){body{padding:0!important}.phone{border-radius:0!important;min-height:100dvh!important}.bottom{bottom:0!important}}
 @media(max-width:380px){.content{padding-left:13px!important;padding-right:13px!important}.product{grid-template-columns:54px minmax(0,1fr) auto!important;gap:2px 9px!important;padding:8px!important}.app-art{width:54px;height:54px}.app-icon{width:46px;height:46px}.add{min-width:66px;padding:0 9px!important}.device-slides{height:100px}}
 
+
+
+
+
+.slide-photo{justify-content:flex-end!important}
+.slide-photo img{width:78%!important;height:100%!important;object-fit:contain!important;object-position:right center!important}
+.slide-copy{position:absolute;z-index:2;left:14px;top:50%;transform:translateY(-50%);width:43%;display:flex;flex-direction:column;gap:5px;text-align:left;pointer-events:none}
+.slide-copy strong{font-size:clamp(12px,3.4vw,16px);line-height:1.12;letter-spacing:-.25px;color:#f7fff5;text-shadow:0 2px 12px #000;font-weight:850}
+.slide-copy span{font-size:clamp(8px,2.3vw,10px);line-height:1.25;color:#c1d0c3;text-shadow:0 2px 8px #000}
+@media(max-width:380px){.slide-copy{left:10px;width:45%;gap:3px}.slide-copy strong{font-size:12px}.slide-copy span{font-size:8px}.slide-photo img{width:76%!important}}
+
+
+/* Banner layering and compact device composition */
+.device-slides{height:116px!important}
+.slide-photo{z-index:1!important;justify-content:flex-end!important;inset:5px 8px!important}
+.slide-photo img{width:62%!important;height:100%!important;object-fit:contain!important;object-position:right center!important;mix-blend-mode:multiply!important}
+.slide-copy{z-index:3!important;left:13px!important;width:43%!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;display:flex!important;flex-direction:column!important;gap:4px!important;overflow-wrap:anywhere}
+.slide-copy strong{font-size:clamp(11px,3vw,14px)!important;line-height:1.15!important;color:#f7fff5!important;text-shadow:0 2px 8px #000!important}
+.slide-copy span{font-size:clamp(8px,2.1vw,10px)!important;line-height:1.2!important;color:#c1d0c3!important}
+.price-model{margin:18px 0 22px!important}
 </style>
 </head>
 <body><main class="phone">
@@ -317,24 +337,6 @@ if($('tgUser')){$('tgUser').value=savedState.username|| (tgProfile?.username?'@'
 if($('comment')){$('comment').value=savedState.comment||'';$('comment').addEventListener('input',persistState)}
 window.addEventListener('beforeunload',persistState);
 document.querySelectorAll('.nav').forEach(n=>n.onclick=()=>showPage(n.dataset.page));$('chips').querySelectorAll('button').forEach(b=>b.onclick=()=>{category=b.dataset.cat;$('chips').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));renderCatalog()});$('searchToggle').onclick=()=>{$('searchBox').classList.toggle('open');if($('searchBox').classList.contains('open'))$('searchInput').focus()};$('searchInput').oninput=renderCatalog;$('showAll').onclick=()=>{category='Все';$('chips').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x.dataset.cat==='Все'));renderCatalog()};if($('appSlider')){$('appSlider').addEventListener('input',updateTopPriceCalc);updateTopPriceCalc();}$('backCart').onclick=()=>showPage('cartPage');$('createOrder').onclick=createOrder;$('openPayment').onclick=()=>openPayment(currentOrder||lastOrder||{id:'',total:0,items:[],status:'pending'});$('paymentBack').onclick=()=>{if(currentOrder){renderOrderDetail(currentOrder);showPage('orderDetailPage')}else showPage('morePage')};renderCatalog();renderCount();
-
-
-.slide-photo{justify-content:flex-end!important}
-.slide-photo img{width:78%!important;height:100%!important;object-fit:contain!important;object-position:right center!important}
-.slide-copy{position:absolute;z-index:2;left:14px;top:50%;transform:translateY(-50%);width:43%;display:flex;flex-direction:column;gap:5px;text-align:left;pointer-events:none}
-.slide-copy strong{font-size:clamp(12px,3.4vw,16px);line-height:1.12;letter-spacing:-.25px;color:#f7fff5;text-shadow:0 2px 12px #000;font-weight:850}
-.slide-copy span{font-size:clamp(8px,2.3vw,10px);line-height:1.25;color:#c1d0c3;text-shadow:0 2px 8px #000}
-@media(max-width:380px){.slide-copy{left:10px;width:45%;gap:3px}.slide-copy strong{font-size:12px}.slide-copy span{font-size:8px}.slide-photo img{width:76%!important}}
-
-
-/* Banner layering and compact device composition */
-.device-slides{height:116px!important}
-.slide-photo{z-index:1!important;justify-content:flex-end!important;inset:5px 8px!important}
-.slide-photo img{width:62%!important;height:100%!important;object-fit:contain!important;object-position:right center!important;mix-blend-mode:multiply!important}
-.slide-copy{z-index:3!important;left:13px!important;width:43%!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;display:flex!important;flex-direction:column!important;gap:4px!important;overflow-wrap:anywhere}
-.slide-copy strong{font-size:clamp(11px,3vw,14px)!important;line-height:1.15!important;color:#f7fff5!important;text-shadow:0 2px 8px #000!important}
-.slide-copy span{font-size:clamp(8px,2.1vw,10px)!important;line-height:1.2!important;color:#c1d0c3!important}
-.price-model{margin:18px 0 22px!important}
 
 /* Compact product-photo slider */
 (()=>{const root=document.getElementById('deviceSlider');if(!root)return;const slides=[...root.querySelectorAll('.device-slide')],dots=[...root.querySelectorAll('.slider-dots button')];let active=0,timer;const show=i=>{active=(i+slides.length)%slides.length;slides.forEach((el,n)=>el.classList.toggle('active',n===active));dots.forEach((el,n)=>el.classList.toggle('active',n===active));};const start=()=>{clearInterval(timer);timer=setInterval(()=>show(active+1),5000)};dots.forEach((b,i)=>b.addEventListener('click',()=>{show(i);start()}));let x=0;root.addEventListener('touchstart',e=>{x=e.touches[0].clientX},{passive:true});root.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-x;if(Math.abs(dx)>35){show(active+(dx<0?1:-1));start()}},{passive:true});start()})();
